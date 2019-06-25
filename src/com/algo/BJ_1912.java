@@ -5,25 +5,28 @@ import java.util.StringTokenizer;
 
 public class BJ_1912 {
     public static void main(String[] args) {
-
         Integer N = null;
-        int input[]= null;
-
+        int input[] = null;
         try (BufferedReader bf = new BufferedReader(new InputStreamReader(System.in))) {
             N = Integer.parseInt(bf.readLine());
-            input = new int[N];
+            input = new int[N + 1];
             String line = bf.readLine();
             StringTokenizer st = new StringTokenizer(line);
-            for (int i =0 ; i <N ;i++){
-                input[i]=Integer.parseInt(st.nextToken());
+            for (int i = 1; i <= N; i++) {
+                input[i] = Integer.parseInt(st.nextToken());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int ret =-3000;
-        for (int i = 1;i<N ;i++){
-            int sum = input[i]+input[i-1];
-            ret = sum >ret ? sum:ret;
+        int dp[] = new int[N + 1];
+        int ret = Integer.MIN_VALUE;
+        for (int i = 1; i <= N; i++) {
+            if (dp[i - 1] < 0) {
+                dp[i] =input[i];
+            } else {
+                dp[i]= dp[i-1]+input[i];
+            }
+            ret = ret > dp[i] ? ret : dp[i];
         }
         System.out.println(ret);
     }
